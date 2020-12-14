@@ -1,0 +1,6 @@
+transformers==3.3.1
+tqdm
+torch
+numpy
+pandas
+sentence-transformers

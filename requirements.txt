@@ -4,5 +4,4 @@ torch
 numpy
 pandas
 sentence-transformers
-azure-storage-blob
 requests

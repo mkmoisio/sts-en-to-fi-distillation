@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader
 from torch import nn, Tensor
 from sentence_transformers.datasets import ParallelSentencesDataset
 import configparser
-import os, csv, torch
+import os, csv, torch, datetime
 from typing import Dict
 from utils.utils import download_dataset
 import pandas as pd
@@ -78,7 +78,8 @@ if __name__ == "__main__":
     dev_mse_evaluator = evaluation.MSEEvaluator(df.iloc[:, 0], df.iloc[:, 1], name='Dev-MSE-evaluator', teacher_model=teacher, batch_size=eval_conf.getint('BatchSize'))
 
     logging.info('Fitting..')
-
+    dt = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=2))).strftime("%Y-%m-%d-%H:%M:%S")
+    output_path = output_path / dt
 
     student.fit(train_objectives=[(train_dataloader, train_loss)],
           evaluator=dev_mse_evaluator,

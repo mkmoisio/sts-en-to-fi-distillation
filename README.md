@@ -1,6 +1,6 @@
 # sts-en-to-fi-distillation
 
-WIP
+# WIP
 
 ## Overview
 

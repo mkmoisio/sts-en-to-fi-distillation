@@ -13,7 +13,7 @@ import logging.config
 
 log_path = Path(os.getcwd()) / 'config/logging.conf'
 data_path = Path(os.getcwd()) / 'data'
-output_path = Path(os.getcwd()) / 'out'
+output_path = Path(os.getcwd()) / 'models'
 logging.config.fileConfig(log_path)
 logger = logging.getLogger('default')
 

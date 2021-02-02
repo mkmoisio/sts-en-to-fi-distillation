@@ -4,13 +4,16 @@
 
 ## Overview
 
-Semantic textual similarity (STS) is a metric measuring similarity of meanings of natural language text pieces. For instance, sentences "There is a cook preparing food" and "A cook is making food" (from SemEval-2017 set) have essentially equal meaning and, therefore, should have very high STS score. STS is quite well studied area in NLP. SemEval, an evaluation semantic analysis systems, kicked off in 2007 and has been held annually since 2012. However, despite recent progress, STS is nowhere close to being a solved problem. Natural language is diverse, ambiguous, and highly context-dependent. There are thousands of languages, but NLP research has mainly focused on a small subset languages, that is, few European languages with the largest speaker base and Chinese.
+Semantic textual similarity (STS) is a metric measuring similarity of meanings of natural language text pieces. For instance, sentences "There is a cook preparing food" and "A cook is making food" (from SemEval-2017 set) have essentially equal meaning and, therefore, should have very high STS score. STS is quite long studied area in the field NLP. However, despite recent progress, STS is nowhere close being solved and majority of recent NLP research has focused on a small set of largest Indo-European languages and Chinese, and, languages with smaller speaker population, such as Finnish, often lack annotated data required to train complex models.
 
-Sentence BERT is an extension proposed by Reimers et al. to BERT-type family of models. Its idea is to fine-tune a model to produce semantically meaningful sentence embeddings that one can compare with simple vector similarity measures (e.g. manhattan distance or cosine similarity). Further, Reimers et al. have described a method, multilingual distillation, to extend a monolingual SentenceBERT to a cross-lingual model.
+This work experiments  using knowledge distillation to transfer STS properties learnt from English into a model pre-trained on Finnish while bypassing the lack of annotated Finnish data. Further, we experiment distillation with different types of data, English-Finnish bilingual, English monolingual and random pseudo samples, to observe which properties of training data are really necessary.
 
-This work explores capacity of distillation-like techniques in different settings. Common to all settings is that given a known-good monolingual teacher model we aim to transfer its desired properties to another model and language. In our case the source and target languages are English and Finnish, respectively.
-
-
+This work builds on the following:
+* Reimers et al.
+  - [Sentence-BERT](https://arxiv.org/abs/1908.10084) ([repository](https://github.com/UKPLab/sentence-transformers))
+  -  [Multilingual Knowledge Distillation](https://arxiv.org/abs/2004.09813)
+* Krishna et al.
+  - [Model Extraction](https://arxiv.org/abs/1910.12366)
 
 
 

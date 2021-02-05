@@ -22,13 +22,12 @@ if __name__ == "__main__":
     df = pd.read_csv(data_path / 'STS-en-en-fi-fi.tsv', sep = '\t')
     #print(df.head())
     
-
     # Evaluators for different STS tasks
-    scores = df['score'].tolist()
+    scores = df['score']
     evaluators = []
-    evaluators.append(EmbeddingSimilarityEvaluator(df['fi1'].tolist(), df['fi2'].tolist(), scores, name = 'FI-FI'))
-    evaluators.append(EmbeddingSimilarityEvaluator(df['en1'].tolist(), df['en2'], scores, name='EN-EN'))
-    evaluators.append(EmbeddingSimilarityEvaluator(df['en1'].tolist(), df['fi2'], scores, name='EN-FI'))
+    evaluators.append(EmbeddingSimilarityEvaluator(df['fi1'], df['fi2'], scores, name='FI-FI'))
+    evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['en2'], scores, name='EN-EN'))
+    evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['fi2'], scores, name='EN-FI'))
 
     # Finnish baselines 
 
@@ -44,17 +43,16 @@ if __name__ == "__main__":
     loaded_models['FinBERT-MAX'] = SentenceTransformer(modules=[word_embedding_model, max_pooling])
     loaded_models['FinBERT-CLS'] = SentenceTransformer(modules=[word_embedding_model, cls_pooling])
 
-
     # Trained models
 
     #loaded_models['Extracted'] = SentenceTransformer(model_path + '/')
     #loaded_models['Inter-lingual'] = SentenceTransformer(model_path + '/XLM-R-single-distil-3')
     #loaded_models['Cross-lingual'] = SentenceTransformer(model_path + '/XLM-R-distilled-3')
-
-    for model_name, model in loaded_models.items():
-        logger.info('Evaluating model: ' + model_name)
-        for evaluator in evaluators:
-            model.evaluate(evaluator)
+    for evaluator in evaluators:
+        logger.info('Evaluating task: ' + evaluator.name)
+        for model_name, model in loaded_models.items():
+            logger.info('Evaluating model: ' + model_name)
+            model.evaluate(evaluator, output_path)
 
 
 

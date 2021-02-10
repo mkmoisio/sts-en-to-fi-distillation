@@ -29,8 +29,8 @@ if __name__ == "__main__":
     evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['en2'], scores, name='EN-EN'))
     evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['fi2'], scores, name='EN-FI'))
 
-    # Finnish baselines 
-
+    # Finnish baselines, https://huggingface.co/TurkuNLP/bert-base-finnish-cased-v1
+    
     word_embedding_model = models.Transformer('TurkuNLP/bert-base-finnish-cased-v1', max_seq_length=128)
     dim = word_embedding_model.get_word_embedding_dimension()
     mean_pooling = models.Pooling(dim, pooling_mode_mean_tokens=True)

@@ -25,9 +25,13 @@ if __name__ == "__main__":
     # Evaluators for different STS tasks
     scores = df['score']
     evaluators = []
+    print(df['fi1'][0:5])
+    print(df['fi2'][0:5])
+    print(scores[0:5])
+
     evaluators.append(EmbeddingSimilarityEvaluator(df['fi1'], df['fi2'], scores, name='FI-FI'))
-    evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['en2'], scores, name='EN-EN'))
-    evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['fi2'], scores, name='EN-FI'))
+    #evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['en2'], scores, name='EN-EN'))
+    #evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['fi2'], scores, name='EN-FI'))
 
     # Finnish baselines, https://huggingface.co/TurkuNLP/bert-base-finnish-cased-v1
     
@@ -43,6 +47,8 @@ if __name__ == "__main__":
     loaded_models['FinBERT-MAX'] = SentenceTransformer(modules=[word_embedding_model, max_pooling])
     loaded_models['FinBERT-CLS'] = SentenceTransformer(modules=[word_embedding_model, cls_pooling])
 
+    # stsb-distilbert-base from https://www.sbert.net/docs/pretrained_models.html
+    loaded_models['DistilBERT'] = SentenceTransformer('stsb-distilbert-base')
     # Trained models
 
     #loaded_models['Extracted'] = SentenceTransformer(model_path + '/')

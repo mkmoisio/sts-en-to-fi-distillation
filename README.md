@@ -10,20 +10,32 @@ We build on the work by the following:
   -  [Multilingual Knowledge Distillation](https://arxiv.org/abs/2004.09813)
 * Krishna et al.
   - [Model Extraction](https://arxiv.org/abs/1910.12366)
+*   Virtanen et al.
+ - [FinBERT](https://arxiv.org/abs/1912.07076) ([repository](https://github.com/TurkuNLP/FinBERT))
 
-We briefly follow the knowledge distillation approach described by Reimers at al. We exploit a good-known English trained Sentence-BERT  fine-tuned for STS as a teacher f<sub>teacher</sub> to train selected student models f<sub>student</sub> so that f<sub>teacher</sub>(s) ≈ f<sub>student</sub>(t) and f<sub>student</sub> ≈ f<sub>student</sub> (s)
+We briefly follow the knowledge distillation approach described by Reimers at al. We exploit a good-known English trained Sentence-BERT  fine-tuned for STS as a teacher f<sub>teacher</sub> to train selected student models f<sub>student</sub> so that f<sub>teacher</sub>(s) ≈ f<sub>student</sub>(s) and f<sub>student</sub>(s) ≈ f<sub>student</sub> (t).
 
 ## Models
+
+| Model   |      Role      |  Origin |
+|----------|:-------------:|------:|
+| stsb-distilbert-base| Teacher | [sbert.net](https://www.sbert.net/docs/pretrained_models.html)|
+| bert-base-finnish-cased-v1 (FinBERT) |    Student   |  [TurkuNLP](https://huggingface.co/TurkuNLP/bert-base-finnish-cased-v1)|
+| xlm-roberta-base  | Student | [🤗](https://huggingface.co/transformers/model_doc/xlmroberta.html) |
+
+Further, we experiment using different pooling strategies for the FinBERT: MAX, MEAN and CLS.
+
+
 
 ## Data
 
 | Set   |      Type      |  Size |
 |----------|:-------------:|------:|
-| Training, cross-lingual |   Parallel bilingual | 216,104 |
-| Training, inter-lingual |    Unilingual   |   208,054 |
-| Training, extraction  | Sampled |   200,000 |
-| Development | Parallel bilingual| 1,141 |
-| Test  | Annotated bilingual | 250 |
+| [Training, cross-lingual](https://drive.google.com/file/d/1klA2zLcFvrLQE7LHXWpMIf0O_Rad-eDT/view?usp=sharing) |   Parallel bilingual | 216,104 |
+| [Training, inter-lingual](https://drive.google.com/file/d/1kZoVVZdzG3pd0CjgJM7Eo1YoiXwg9qFf/view?usp=sharing) |    Unilingual   |   208,054 |
+| [Training, extraction](https://drive.google.com/file/d/1kZoVVZdzG3pd0CjgJM7Eo1YoiXwg9qFf/view?usp=sharing)  | Sampled |   200,000 |
+| [Development](https://drive.google.com/file/d/1i1BY0CyFsuAXtbw8uoQvzEZ53qQwv-nc/view?usp=sharing) | Parallel bilingual| 1,141 |
+| [Test](https://github.com/mkmoisio/sts-en-to-fi-distillation/blob/master/data/STS-en-en-fi-fi.tsv) | Annotated bilingual | 250 |
 
 ## Training
 

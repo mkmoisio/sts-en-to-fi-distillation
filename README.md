@@ -4,14 +4,16 @@ Semantic textual similarity (STS) is a metric measuring similarity of meanings o
 
 This work experiments using knowledge distillation to transfer STS properties learnt from English into a model pre-trained on Finnish while bypassing the lack of annotated Finnish data. Further, we experiment distillation with different types of data, English-Finnish bilingual, English monolingual and random pseudo samples, to observe which properties of training data are really necessary.
 
-We build on the work by the following:
+We mostly build on the work by the following:
 * Reimers et al.
   - [Sentence-BERT](https://arxiv.org/abs/1908.10084) ([repository](https://github.com/UKPLab/sentence-transformers))
   -  [Multilingual Knowledge Distillation](https://arxiv.org/abs/2004.09813)
 * Krishna et al.
   - [Model Extraction](https://arxiv.org/abs/1910.12366)
-*   Virtanen et al.
- - [FinBERT](https://arxiv.org/abs/1912.07076) ([repository](https://github.com/TurkuNLP/FinBERT))
+*  Virtanen et al.
+  - [FinBERT](https://arxiv.org/abs/1912.07076) ([repository](https://github.com/TurkuNLP/FinBERT))
+* Tiedemann
+  - [Parallel data](http://www.lrec-conf.org/proceedings/lrec2012/pdf/463_Paper.pdf)
 
 We briefly follow the knowledge distillation approach described by Reimers at al. We exploit a good-known English trained Sentence-BERT  fine-tuned for STS as a teacher f<sub>teacher</sub> to train selected student models f<sub>student</sub> so that f<sub>teacher</sub>(s) ≈ f<sub>student</sub>(s) and f<sub>student</sub>(s) ≈ f<sub>student</sub> (t).
 

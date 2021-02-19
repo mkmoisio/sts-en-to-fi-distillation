@@ -5,3 +5,5 @@ numpy
 pandas
 sentence-transformers
 requests
+simplejson
+matplotlib

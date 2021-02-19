@@ -4,3 +4,4 @@ data/distil-dev.tsv
 data/train-set.tsv
 __pycache__/
 .vscode/
+models/

@@ -14,6 +14,8 @@ We mostly build on the work by the following:
   - [FinBERT](https://arxiv.org/abs/1912.07076) ([repository](https://github.com/TurkuNLP/FinBERT))
 * Tiedemann
   - [Parallel data](http://www.lrec-conf.org/proceedings/lrec2012/pdf/463_Paper.pdf)
+* Cer et al.
+  - [Original test data](https://www.aclweb.org/anthology/S17-2001/)
 
 We briefly follow the knowledge distillation approach described by Reimers at al. We exploit a good-known English trained Sentence-BERT  fine-tuned for STS as a teacher f<sub>teacher</sub> to train selected student models f<sub>student</sub> so that f<sub>teacher</sub>(s) ≈ f<sub>student</sub>(s) and f<sub>student</sub>(s) ≈ f<sub>student</sub> (t).
 
@@ -21,9 +23,9 @@ We briefly follow the knowledge distillation approach described by Reimers at al
 
 | Model   |      Role      |  Origin |
 |----------|:-------------:|------:|
-| stsb-distilbert-base| Teacher | [sbert.net](https://www.sbert.net/docs/pretrained_models.html)|
-| bert-base-finnish-cased-v1 (FinBERT) |    Student   |  [TurkuNLP](https://huggingface.co/TurkuNLP/bert-base-finnish-cased-v1)|
-| xlm-roberta-base  | Student | [🤗](https://huggingface.co/transformers/model_doc/xlmroberta.html) |
+| stsb-distilbert-base| Teacher + Baseline | [sbert.net](https://www.sbert.net/docs/pretrained_models.html)|
+| bert-base-finnish-cased-v1 (FinBERT) |    Baseline   |  [TurkuNLP](https://huggingface.co/TurkuNLP/bert-base-finnish-cased-v1)|
+| xlm-roberta-base  | Student + Baseline | [🤗](https://huggingface.co/transformers/model_doc/xlmroberta.html) |
 
 Further, we experiment using different pooling strategies for the FinBERT: MAX, MEAN and CLS.
 

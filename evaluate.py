@@ -4,35 +4,55 @@ import logging.config
 import pandas as pd
 import numpy as np
 import os
+import configparser
+import zipfile
 from sentence_transformers import SentenceTransformer, SentencesDataset, InputExample, losses, LoggingHandler, models
 from sentence_transformers.evaluation import EmbeddingSimilarityEvaluator, SimilarityFunction
 import simplejson as json
-
+import gdown
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
 log_path = Path(os.getcwd()) / 'config/logging.conf'
 data_path = Path(os.getcwd()) / 'data'
 output_path = Path(os.getcwd()) / 'results'
-model_path = Path(os.getcwd()) / 'models'
+model_path = os.getcwd() + '/models/'
 
 logging.config.fileConfig(log_path)
 logger = logging.getLogger('default')
 
 
+def dl_unzip(frm, name):
+    zfpath = str(model_path) + name + '.zip'
+    if not os.path.exists(zfpath):
+        gdown.download(frm, model_path + name + '.zip', quiet=False)
+    with zipfile.ZipFile(zfpath, 'r') as zf:
+        zf.extractall(path=model_path)
 
 
 if __name__ == "__main__":
     df = pd.read_csv(data_path / 'STS-en-en-fi-fi.tsv', sep = '\t')
-    #print(df.head())
-    
+
+    config = configparser.ConfigParser()
+    config.read(os.getcwd() + '/config/eval.conf')
+    model_urls = config['MODELS']
+
     # Evaluators for different STS tasks
     scores = df['score']
     evaluators = []
+    
     evaluators.append(EmbeddingSimilarityEvaluator(df['fi1'], df['fi2'], scores, name='FI-FI', main_similarity = SimilarityFunction.COSINE))
     evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['en2'], scores, name='EN-EN', main_similarity = SimilarityFunction.COSINE))
     evaluators.append(EmbeddingSimilarityEvaluator(df['en1'], df['fi2'], scores, name='EN-FI', main_similarity = SimilarityFunction.COSINE))
 
+    
+    
+    loaded_models = {}
+
+    # Trained student models
+    for name in model_urls:
+        dl_unzip(model_urls[name], name)
+        loaded_models[name] = SentenceTransformer(model_path + name)
     # Finnish baselines, https://huggingface.co/TurkuNLP/bert-base-finnish-cased-v1
     
     word_embedding_model = models.Transformer('TurkuNLP/bert-base-finnish-cased-v1', max_seq_length=128)
@@ -41,17 +61,12 @@ if __name__ == "__main__":
     max_pooling = models.Pooling(dim, pooling_mode_max_tokens=True, pooling_mode_mean_tokens=False)
     cls_pooling = models.Pooling(dim, pooling_mode_cls_token=True, pooling_mode_mean_tokens=False)
     
-    loaded_models = {}
+    
 
     loaded_models['FinBERT-MEAN'] =  SentenceTransformer(modules=[word_embedding_model, mean_pooling])
     loaded_models['FinBERT-MAX'] = SentenceTransformer(modules=[word_embedding_model, max_pooling])
     loaded_models['FinBERT-CLS'] = SentenceTransformer(modules=[word_embedding_model, cls_pooling])
-
-    # Trained models
-
-    #loaded_models['Extracted'] = SentenceTransformer(model_path + '/')
-    #loaded_models['Inter-lingual'] = SentenceTransformer(model_path + '/XLM-R-single-distil-3')
-    #loaded_models['Cross-lingual'] = SentenceTransformer(model_path + '/XLM-R-distilled-3')
+    loaded_models[name] = SentenceTransformer(model_path + name)
 
     results = {}
     for evaluator in evaluators:

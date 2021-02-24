@@ -1,6 +1,6 @@
 ## Overview
 
-Semantic textual similarity (STS) is a metric measuring similarity of meanings of natural language text pieces. STS is quite long studied area in the field NLP. However, despite recent progress majority of recent NLP research has focused on a small set of largest Indo-European languages and Chinese, and, languages with smaller speaker population, such as Finnish, often lack annotated data required to train complex models.
+Semantic textual similarity (STS) is a metric measuring similarity of meanings of natural language text pieces. Majority of recent NLP research has focused on a small set of largest Indo-European languages and Chinese, and, languages with smaller speaker population, such as Finnish, often lack annotated data required to train complex models.
 
 This work experiments using knowledge distillation to transfer STS properties learnt from English into a model pre-trained on Finnish while bypassing the lack of annotated Finnish data. Further, we experiment distillation with different types of data, English-Finnish bilingual, English monolingual and random pseudo samples, to observe which properties of training data are really necessary.
 
@@ -13,11 +13,11 @@ We mostly build on the work by the following:
 *  Virtanen et al.
   - [FinBERT](https://arxiv.org/abs/1912.07076) ([repository](https://github.com/TurkuNLP/FinBERT))
 * Tiedemann
-  - [Parallel data](http://www.lrec-conf.org/proceedings/lrec2012/pdf/463_Paper.pdf)
+  - [Parallel data](http://www.lrec-conf.org/proceedings/lrec2012/pdf/463_Paper.pdf) ([OPUS](https://opus.nlpl.eu))
 * Cer et al.
   - [Original test data](https://www.aclweb.org/anthology/S17-2001/)
 
-We briefly follow the knowledge distillation approach described by Reimers at al. We exploit a good-known English trained Sentence-BERT  fine-tuned for STS as a teacher f<sub>teacher</sub> to train selected student models f<sub>student</sub> so that f<sub>teacher</sub>(s) ≈ f<sub>student</sub>(s) and f<sub>student</sub>(s) ≈ f<sub>student</sub> (t).
+We briefly follow the knowledge distillation approach described by Reimers at al. We exploit a good-known English trained Sentence-BERT  fine-tuned for STS as a teacher f<sub>teacher</sub> to train selected student models f<sub>student</sub> so that f<sub>teacher</sub>(s) ≈ f<sub>student</sub>(s) and f<sub>student</sub>(s) ≈ f<sub>student</sub> (t) where s is a sentence in the source language (English) and t is a sentence in target language (Finnish).
 
 ## Models
 
@@ -43,4 +43,4 @@ Further, we experiment using different pooling strategies for the FinBERT: MAX, 
 
 ## Training
 
-## Evaluation Metrics
+## Evaluation

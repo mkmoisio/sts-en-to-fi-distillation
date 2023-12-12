@@ -1,4 +1,4 @@
-transformers==3.3.1
+transformers==4.30.0
 tqdm
 torch
 numpy
